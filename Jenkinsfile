@@ -28,7 +28,6 @@ pipeline {
         stage('Generate Inventory') {
             steps {
                 sh '''
-                    # Query Azure for VM IPs
                     az vm list-ip-addresses -o json \
                       | jq -r '.[] | .virtualMachine.network.publicIpAddresses[].ipAddress' > hosts.txt
 
@@ -41,13 +40,16 @@ pipeline {
             }
         }
 
+        stage('Test Azure SDK') {
+            steps {
+                sh 'ansible-playbook -i localhost, test_azure.yaml'
+            }
+        }
+
         stage('Run Ansible Playbook') {
-    stage('Run Ansible Playbook') {
-    steps {
-        sh 'ansible-playbook -i localhost, test_azure.yaml'
-    }
-}
-
-
+            steps {
+                sh 'ansible-playbook -i inventory.ini create_vm.yaml'
+            }
+        }
     }
 }
