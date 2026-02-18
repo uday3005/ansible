@@ -12,6 +12,19 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/uday3005/ansible.git'
             }
         }
+
+        stage('Azure Login') {
+            steps {
+                sh '''
+                    az login --service-principal \
+                        -u $ARM_CLIENT_ID \
+                        -p $ARM_CLIENT_SECRET \
+                        --tenant $ARM_TENANT_ID
+                    az account set --subscription $ARM_SUBSCRIPTION_ID
+                '''
+            }
+        }
+
         stage('Generate Inventory') {
             steps {
                 sh '''
@@ -27,9 +40,11 @@ pipeline {
                 '''
             }
         }
+
         stage('Run Ansible Playbook') {
             steps {
                 sh '''
+                    export ANSIBLE_CONFIG=$WORKSPACE/ansible.cfg
                     ansible-playbook -i inventory.ini create_vm.yaml
                 '''
             }
