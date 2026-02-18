@@ -14,7 +14,10 @@ pipeline {
         }
         stage('Run Ansible Playbook') {
             steps {
-                sh 'ansible-playbook -i localhost, create_vm.yaml'
+                sh '''
+                    source /home/uday/ansible-venv/bin/activate
+                    ansible-playbook -i localhost, create_vm.yaml
+                '''
             }
         }
     }
