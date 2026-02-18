@@ -9,6 +9,10 @@
         vm_size: Standard_B1s
         admin_username: azureuser
         admin_password: MyP@ssword123
+        subscription_id: "{{ lookup('env','ARM_SUBSCRIPTION_ID') }}"
+        tenant: "{{ lookup('env','ARM_TENANT_ID') }}"
+        client_id: "{{ lookup('env','ARM_CLIENT_ID') }}"
+        secret: "{{ lookup('env','ARM_CLIENT_SECRET') }}"
         image:
           offer: UbuntuServer
           publisher: Canonical
