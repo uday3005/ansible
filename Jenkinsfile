@@ -42,12 +42,12 @@ pipeline {
         }
 
         stage('Run Ansible Playbook') {
+    stage('Run Ansible Playbook') {
     steps {
-        sh '''
-            /var/lib/jenkins/ansible-venv/bin/ansible-playbook -i inventory.ini create_vm.yaml
-        '''
+        sh 'ansible-playbook -i localhost, test_azure.yaml'
     }
 }
+
 
     }
 }
