@@ -42,12 +42,12 @@ pipeline {
         }
 
         stage('Run Ansible Playbook') {
-            steps {
-                sh '''
-                    export ANSIBLE_CONFIG=$WORKSPACE/ansible.cfg
-                    ansible-playbook -i inventory.ini create_vm.yaml
-                '''
-            }
-        }
+    steps {
+        sh '''
+            /var/lib/jenkins/ansible-venv/bin/ansible-playbook -i inventory.ini create_vm.yaml
+        '''
+    }
+}
+
     }
 }
