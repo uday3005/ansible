@@ -1,9 +1,0 @@
-- name: Test Azure SDK
-  hosts: localhost
-  tasks:
-    - name: List resource groups
-      azure_rm_resourcegroup_info:
-      register: rg_info
-
-    - debug:
-        var: rg_info
